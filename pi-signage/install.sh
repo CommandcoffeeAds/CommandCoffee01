@@ -50,8 +50,17 @@ fi
 echo "==> Creating launcher script"
 cat > "$APP_DIR/launch-kiosk.sh" <<EOF
 #!/usr/bin/env bash
-# Waits for network, then launches Chromium in kiosk mode pointed at the player.
+# Waits for network, starts a local web server for the player files (avoids
+# file:// fetch/CORS restrictions in Chromium), then launches kiosk mode
+# pointed at that local server.
 sleep 5
+
+# Start a local HTTP server for the app directory if one isn't already running
+if ! curl -s "http://127.0.0.1:8080/index.html" -o /dev/null; then
+  cd "$APP_DIR" && python3 -m http.server 8080 >/dev/null 2>&1 &
+  sleep 2
+fi
+
 exec "$CHROMIUM_BIN" \\
   --kiosk \\
   --noerrdialogs \\
@@ -61,7 +70,7 @@ exec "$CHROMIUM_BIN" \\
   --autoplay-policy=no-user-gesture-required \\
   --incognito \\
   --check-for-update-interval=1 \\
-  "file://$APP_DIR/index.html"
+  "http://127.0.0.1:8080/index.html"
 EOF
 chmod +x "$APP_DIR/launch-kiosk.sh"
 
