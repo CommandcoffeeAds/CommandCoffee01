@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Signage Player</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100vw; height: 100vh;
+    background: #000; overflow: hidden;
+    cursor: none;
+  }
+  #stage {
+    position: relative;
+    width: 100%; height: 100%;
+  }
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    background: #000;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+  }
+  .slide.active {
+    opacity: 1;
+    z-index: 2;
+  }
+  #status {
+    position: fixed;
+    bottom: 8px; right: 12px;
+    font-family: monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    z-index: 10;
+    pointer-events: none;
+  }
+  #errorScreen {
+    position: fixed; inset: 0;
+    display: none;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    color: #888; font-family: sans-serif;
+    background: #000; z-index: 20;
+  }
+</style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div id="status"></div>
+  <div id="errorScreen">
+    <h1>No content loaded</h1>
+    <p>Waiting for manifest&hellip;</p>
+  </div>
+
+<script>
+/* ------------------------------------------------------------------
+   Pi Signage Player
+   - Reads local config.json for the remote manifest URL & timing
+   - Fetches manifest.json (remote) describing slides
+   - Falls back to last-known-good manifest cached in localStorage
+   - Polls for updates in the background on a timer
+   ------------------------------------------------------------------ */
+
+const STORAGE_KEY = "signage_manifest_cache_v1";
+const stage = document.getElementById("stage");
+const statusEl = document.getElementById("status");
+const errorScreen = document.getElementById("errorScreen");
+
+let config = null;
+let currentManifest = null;
+let currentIndex = 0;
+let slideTimer = null;
+let refreshTimer = null;
+
+async function loadConfig() {
+  const res = await fetch("config.json", { cache: "no-store" });
+  if (!res.ok) throw new Error("config.json missing");
+  return res.json();
+}
+
+async function fetchManifest(url) {
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error("manifest fetch failed: " + res.status);
+  const data = await res.json();
+  if (!data.items || !Array.isArray(data.items) || data.items.length === 0) {
+    throw new Error("manifest has no items");
+  }
+  return data;
+}
+
+function saveManifestCache(manifest) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      manifest, savedAt: Date.now()
+    }));
+  } catch (e) { /* storage full or unavailable, ignore */ }
+}
+
+function loadManifestCache() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw).manifest;
+  } catch (e) {
+    return null;
+  }
+}
+
+function manifestsEqual(a, b) {
+  if (!a || !b) return false;
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
+function setStatus(text) {
+  statusEl.textContent = text;
+}
+
+function buildSlideElement(item) {
+  let el;
+  if (item.type === "video") {
+    el = document.createElement("video");
+    el.src = item.url;
+    el.muted = true;
+    el.autoplay = false;
+    el.playsInline = true;
+    el.preload = "auto";
+  } else {
+    el = document.createElement("img");
+    el.src = item.url;
+  }
+  el.className = "slide";
+  el.dataset.duration = item.duration || config.slideDurationSeconds || 8;
+  return el;
+}
+
+function clearStage() {
+  stage.innerHTML = "";
+}
+
+function showSlide(index) {
+  clearTimeout(slideTimer);
+  const items = currentManifest.items;
+  if (items.length === 0) return;
+
+  index = ((index % items.length) + items.length) % items.length;
+  currentIndex = index;
+  const item = items[index];
+
+  clearStage();
+  const el = buildSlideElement(item);
+  stage.appendChild(el);
+
+  requestAnimationFrame(() => el.classList.add("active"));
+
+  setStatus(`slide ${index + 1}/${items.length}`);
+
+  if (item.type === "video") {
+    el.addEventListener("ended", () => showSlide(currentIndex + 1));
+    el.addEventListener("error", () => advanceAfterError());
+    el.play().catch(() => advanceAfterError());
+    // safety timeout in case 'ended' never fires
+    slideTimer = setTimeout(() => showSlide(currentIndex + 1), (item.maxSeconds || 120) * 1000);
+  } else {
+    el.addEventListener("error", () => advanceAfterError());
+    const duration = (item.duration || config.slideDurationSeconds || 8) * 1000;
+    slideTimer = setTimeout(() => showSlide(currentIndex + 1), duration);
+  }
+}
+
+function advanceAfterError() {
+  setTimeout(() => showSlide(currentIndex + 1), 500);
+}
+
+function startPlayback(manifest) {
+  currentManifest = manifest;
+  currentIndex = 0;
+  errorScreen.style.display = "none";
+  showSlide(0);
+}
+
+async function checkForUpdate() {
+  try {
+    const fresh = await fetchManifest(config.manifestUrl);
+    if (!manifestsEqual(fresh, currentManifest)) {
+      saveManifestCache(fresh);
+      startPlayback(fresh);
+    }
+  } catch (e) {
+    // Remote unreachable — keep playing what we have.
+    console.warn("Manifest refresh failed:", e.message);
+  }
+}
+
+async function init() {
+  try {
+    config = await loadConfig();
+  } catch (e) {
+    setStatus("config.json missing");
+    errorScreen.style.display = "flex";
+    return;
+  }
+
+  const cached = loadManifestCache();
+  if (cached) {
+    startPlayback(cached);
+  } else {
+    errorScreen.style.display = "flex";
+  }
+
+  try {
+    const fresh = await fetchManifest(config.manifestUrl);
+    saveManifestCache(fresh);
+    startPlayback(fresh);
+  } catch (e) {
+    if (!cached) {
+      setStatus("no manifest available: " + e.message);
+    }
+  }
+
+  const intervalMs = (config.refreshIntervalMinutes || 5) * 60 * 1000;
+  refreshTimer = setInterval(checkForUpdate, intervalMs);
+}
+
+init();
+</script>
+</body>
+</html>

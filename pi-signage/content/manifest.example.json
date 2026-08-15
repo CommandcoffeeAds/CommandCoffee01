@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "type": "image",
+      "url": "https://example.com/ads/promo1.jpg",
+      "duration": 10
+    },
+    {
+      "type": "image",
+      "url": "https://example.com/ads/promo2.jpg",
+      "duration": 8
+    },
+    {
+      "type": "video",
+      "url": "https://example.com/ads/promo3.mp4",
+      "maxSeconds": 60
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "manifestUrl": "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/manifest.json",
+  "refreshIntervalMinutes": 5,
+  "slideDurationSeconds": 8
+}
