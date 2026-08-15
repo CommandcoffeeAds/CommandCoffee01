@@ -9,6 +9,72 @@
       "type": "video",
       "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/2.mp4",
       "duration": 8
+    },
+    {
+      "type": "image",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/20231001_075702.jpg",
+      "duration": 9
+    },
+    {
+      "type": "image",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/20240112_152028.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/20241112_172204.jpg",
+      "duration": 11
+    },
+    {
+      "type": "image",
+      "_NOTE": "Filename was truncated in the source screenshot with '...' - this URL is almost certainly WRONG and needs the real filename swapped in before this item will load. Check your repo's actual file listing.",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/470236501_4119671251596762_1028384489122593098_n...",
+      "duration": 9
+    },
+    {
+      "type": "video",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/GreenFutureMat.mp4",
+      "duration": 15
+    },
+    {
+      "type": "image",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/IMG-20231230-WA0010.jpg",
+      "duration": 10
+    },
+    {
+      "type": "image",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/IMG-20241123-WA0048.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/WhatsApp%20Image%202024-10-21%20at%2014.50.32_d756b313.jpg",
+      "duration": 9
+    },
+    {
+      "type": "image",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/WhatsApp%20Image%202024-12-11%20at%2022.31.52_832241da.jpg",
+      "duration": 10
+    },
+    {
+      "type": "image",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/WhatsApp%20Image%202025-02-26%20at%2007.23.08_7a41c0db.jpg",
+      "duration": 8
+    },
+    {
+      "type": "image",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/WhatsApp%20Image%202026-03-13%20at%208.41.37%20AM.jpeg",
+      "duration": 11
+    },
+    {
+      "type": "image",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/WhatsApp%20Image%202026-03-16%20at%201.12.20%20PM.jpeg",
+      "duration": 9
+    },
+    {
+      "type": "video",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/WhatsApp%20Video%202025-12-04%20at%2014.22.54_7edc950b.mp4",
+      "duration": 12
     }
   ]
 }
