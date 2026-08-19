@@ -1,11 +1,6 @@
 {
   "items": [
       {
-      "type": "video",
-      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/2.mp4",
-      "duration": 8
-    },
-    {
       "type": "image",
       "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/20231001_075702.jpg",
       "duration": 9
