@@ -1,11 +1,6 @@
 {
   "items": [
-    {
-      "type": "image",
-      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/1.jpg",
-      "duration": 10
-    },
-    {
+      {
       "type": "video",
       "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/2.mp4",
       "duration": 8
@@ -28,7 +23,7 @@
     {
       "type": "image",
       "_NOTE": "Filename was truncated in the source screenshot with '...' - this URL is almost certainly WRONG and needs the real filename swapped in before this item will load. Check your repo's actual file listing.",
-      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/470236501_4119671251596762_1028384489122593098_n.jpg",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/470236501_4119671251596762_1028384489122593098_n...",
       "duration": 9
     },
     {
@@ -74,7 +69,37 @@
     {
       "type": "video",
       "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/WhatsApp%20Video%202025-12-04%20at%2014.22.54_7edc950b.mp4",
-      "duration": 35
+      "duration": 12
+    },
+    {
+      "type": "video",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/10907636-uhd_2160_3840_30fps.mp4",
+      "duration": 10
+    },
+    {
+      "type": "video",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/11836114-hd_1080_1920_25fps.mp4",
+      "duration": 10
+    },
+    {
+      "type": "video",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/13737156-uhd_2160_3840_24fps.mp4",
+      "duration": 12
+    },
+    {
+      "type": "video",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/12272526_3840_2160_30fps.mp4",
+      "duration": 10
+    },
+    {
+      "type": "video",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/16395908_2160_3840_50fps.mp4",
+      "duration": 10
+    },
+    {
+      "type": "video",
+      "url": "https://raw.githubusercontent.com/CommandcoffeeAds/CommandCoffee01/refs/heads/main/pi-signage/content/20772454-uhd_3840_2160_24fps.mp4",
+      "duration": 12
     }
   ]
 }
